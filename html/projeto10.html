@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Projeto 10</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  TeX: { equationNumbers: { autoNumber: 'all' } }
+});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<style>
+body > * {
+  max-width: 42em;
+}
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  padding-left: 7.5em;
+  padding-right: 7.5em;
+}
+pre, code {
+  max-width: 50em;
+  font-family: monospace;
+}
+pre.oct-code {
+  border: 1px solid Grey;
+  padding: 5px;
+}
+pre.oct-code-output {
+  margin-left: 2em;
+}
+span.comment {
+  color: ForestGreen;
+}
+span.keyword {
+  color: Blue;
+}
+span.string {
+  color: DarkOrchid;
+}
+footer {
+  margin-top: 2em;
+  font-size: 80%;
+}
+a, a:visited {
+  color: Blue;
+}
+h2 {
+  font-family: "Roboto Condensed", serif;
+  margin-top: 1.5em;
+}
+h2 a, h2 a:visited {
+  color: Black;
+}
+</style>
+
+</head>
+<body>
+<h1>Projeto 10</h1>
+
+<p><b>Autor:</b> Marlon da Silva Rogério</p>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#node1">Referências</a></li>
+</ul>
+<h2><a id="node1">Referências</a></h2>
+<p><b>GONZALEZ, R. C.</b>, WOODS, R. E. Processamento de Imagens Digitais.
+Editora Edgard Blucher, ISBN São Paulo, 2000.
+<b>Support MathWorks</b>, 2021. Disponível em: <a href="https://www.mathworks.com/help/">https://www.mathworks.com/help/</a>.
+Acesso em: 18 de julho. de 2021.</p>
+
+<pre class="oct-code"><span class="comment">%Definir um conjunto de imagens</span>
+<span class="comment">%Tumor em images de ultrasonografia de mama OU outras imagens.</span>
+<span class="comment">%Segmente nas 3 images o tumor (bening) OU outra região.</span>
+<span class="comment">%Visualizar, comparar (com a �resposta fornecida* mask) e �comentar</span>
+
+
+close all; clear; clc;
+
+<span class="comment">##img = im2double(imread('tumor1.png'));</span>
+<span class="comment">##img = im2double(imread('tumor2.png'));</span>
+img = im2double(imread(<span class="string">'tumor3.png'</span>));
+
+<span class="comment">% com mathlab usar imbinarize</span>
+binarizada = im2bw(img, 0.3);
+complemento = imcomplement(bwareaopen(binarizada, 2000));
+bordas = imclearborder(complemento,8);
+tumor = imopen(bordas, strel(<span class="string">"disk"</span>, 10, 0));
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title(<span class="string">"Imagem original"</span>);
+subplot(1,2,2)
+imshow(binarizada, []);
+title(<span class="string">"Imagem binarizada"</span>);
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title(<span class="string">"Imagem original"</span>);
+subplot(1,2,2)
+imshow(complemento, []);
+title(<span class="string">"Imagem complemento"</span>);
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title(<span class="string">"Imagem original"</span>);
+subplot(1,2,2)
+imshow(bordas, []);
+title(<span class="string">"Imagem bordas"</span>);
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title(<span class="string">"Imagem original"</span>);
+subplot(1,2,2)
+imshow(tumor);
+title(<span class="string">"Imagem do Tumor"</span>);</pre>
+<img src="projeto10-1.png" alt="projeto10-1.png"><img src="projeto10-2.png" alt="projeto10-2.png"><img src="projeto10-3.png" alt="projeto10-3.png"><img src="projeto10-4.png" alt="projeto10-4.png">
+<footer>
+<hr>
+<a href="https://www.octave.org">Published with GNU Octave 6.2.0</a>
+</footer>
+<!--
+##### SOURCE BEGIN #####
+%% Projeto 10
+% *Autor:* Marlon da Silva Rogério
+
+%% Referências
+% *GONZALEZ, R. C.*, WOODS, R. E. Processamento de Imagens Digitais.
+% Editora Edgard Blucher, ISBN São Paulo, 2000.
+% *Support MathWorks*, 2021. Disponível em: <https://www.mathworks.com/help/>.
+% Acesso em: 18 de julho. de 2021.
+
+%Definir um conjunto de imagens
+%Tumor em images de ultrasonografia de mama OU outras imagens.
+%Segmente nas 3 images o tumor (bening) OU outra região.
+%Visualizar, comparar (com a �resposta fornecida* mask) e �comentar
+
+
+close all; clear; clc;
+
+##img = im2double(imread('tumor1.png'));
+##img = im2double(imread('tumor2.png'));
+img = im2double(imread('tumor3.png'));
+
+% com mathlab usar imbinarize
+binarizada = im2bw(img, 0.3);
+complemento = imcomplement(bwareaopen(binarizada, 2000));
+bordas = imclearborder(complemento,8);
+tumor = imopen(bordas, strel("disk", 10, 0));
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title("Imagem original");
+subplot(1,2,2)
+imshow(binarizada, []);
+title("Imagem binarizada");
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title("Imagem original");
+subplot(1,2,2)
+imshow(complemento, []);
+title("Imagem complemento");
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title("Imagem original");
+subplot(1,2,2)
+imshow(bordas, []);
+title("Imagem bordas");
+
+figure;
+subplot(1,2,1)
+imshow(img);
+title("Imagem original");
+subplot(1,2,2)
+imshow(tumor);
+title("Imagem do Tumor");
+
+
+
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>
